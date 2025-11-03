@@ -23,7 +23,7 @@ fn main() {
     let args = Args::parse();
 
     if let Ok(lines) = read_lines(&args.file) {
-        for (index, line) in lines.flatten().enumerate() {
+        for (index, line) in lines.map_while(Result::ok).enumerate() {
             if line.contains(&args.keyword) {
                 let highlighted =
                     line.replace(&args.keyword, &args.keyword.red().bold().to_string());
