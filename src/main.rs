@@ -1,4 +1,5 @@
 use clap::Parser;
+use colored::*;
 use std::fs::File;
 use std::io::BufRead;
 use std::path::Path;
@@ -24,10 +25,12 @@ fn main() {
     if let Ok(lines) = read_lines(&args.file) {
         for (index, line) in lines.flatten().enumerate() {
             if line.contains(&args.keyword) {
+                let highlighted =
+                    line.replace(&args.keyword, &args.keyword.red().bold().to_string());
                 if args.lines {
-                    println!("{}: {}", index + 1, line);
+                    println!("{}: {}", index + 1, highlighted);
                 } else {
-                    println!("{}", line);
+                    println!("{}", highlighted);
                 }
             }
         }
